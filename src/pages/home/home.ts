@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
+import { ApplicationProvider } from '../../providers/application/application';
+import { Location } from '../../models/location';
 
 @Component({
   selector: 'page-home',
@@ -7,13 +9,17 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
+  locations : any;
   public serachKey: string;
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private appService : ApplicationProvider) {
 
   }
 
-  onInput(event)
-  {}
+  onInput(key)
+  {
+    this.locations = this.appService.GetLocations(this.serachKey)
+         .subscribe( locations => this.locations = locations);
+  }
   onCancel(event)
   {}
 
